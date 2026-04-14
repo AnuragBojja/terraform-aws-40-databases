@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "robosho-terraform-bucket"
+    bucket = "roboshop-terraform-dev-daws-test"
     key    = "remote-state-roboshop-dev-40-databases"
     region = "us-east-1"
     use_lockfile = true
