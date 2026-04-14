@@ -40,9 +40,9 @@ data "aws_ssm_parameter" "mysql_sg_id" {
 }
 
 #### BACKEND ####
-data "aws_ssm_parameter" "cart_sg_id" {
-  name = "/${var.project_name}/${var.env}/cart_sg_id"
-}
+# data "aws_ssm_parameter" "cart_sg_id" {
+#   name = "/${var.project_name}/${var.env}/cart_sg_id"
+# }
 data "aws_ssm_parameter" "catalogue_sg_id" {
   name = "/${var.project_name}/${var.env}/catalogue_sg_id"
 }
@@ -60,9 +60,9 @@ data "aws_ssm_parameter" "shipping_sg_id" {
 data "aws_ssm_parameter" "database_subnet_ids" {
   name = "/${var.project_name}/${var.env}/database_subnet_ids"
 }
-data "aws_ssm_parameter" "frontend_subnet_ids" {
-  name = "/${var.project_name}/${var.env}/frontend_subnet_ids"
+data "aws_ssm_parameter" "public_subnet_ids" {
+  name = "/${var.project_name}/${var.env}/public_subnet_ids"
 }
-data "aws_ssm_parameter" "backend_subnet_ids" {
-  name = "/${var.project_name}/${var.env}/backend_subnet_ids"
+data "aws_ssm_parameter" "private_subnet_ids" {
+  name = "/${var.project_name}/${var.env}/private_subnet_ids"
 }
