@@ -7,8 +7,9 @@ locals {
   common_name = ("${var.project_name}-${var.env}")
   vpc_id = data.aws_ssm_parameter.vpc_id.value
   ami_id = data.aws_ami.roboshop_ami.id
+  shh_loginpass = data.aws_ssm_parameter.shh_loginpass.value
   database_subnet_ids = split(",",data.aws_ssm_parameter.database_subnet_ids.value)[0]
-  
+
   ### DATABASES
   mongodb_sg_id = data.aws_ssm_parameter.mongodb_sg_id.value
   rabbitmq_sg_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
