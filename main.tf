@@ -23,9 +23,15 @@ resource "terraform_data" "mongodb" {
     host = aws_instance.mongodb.private_ip
   }
 
+  provisioner "file" {
+    source = "boostrap.sh"
+    destination = "/tmp/boostrap.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [ 
-        "echo hello from mongodb"
+        "chmod +x /tmp/boostrap.sh",
+        "sudo /tmp/boostrap.sh mongodb"
      ]
   }
 }
