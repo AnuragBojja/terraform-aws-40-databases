@@ -3,6 +3,8 @@ resource "aws_instance" "mongodb" {
   instance_type = var.instance_type
   vpc_security_group_ids = [local.mongodb_sg_id]
   subnet_id = local.database_subnet_ids
+  iam_instance_profile = aws_iam_instance_profile.MongoDB-SSM-Role.name
+
   tags = merge(
     local.common_tags,
     {
@@ -10,6 +12,10 @@ resource "aws_instance" "mongodb" {
     }
   )
 }
+resource "aws_iam_instance_profile" "MongoDB-SSM-Role" {
+  name = "MongoDB-SSM-Role"
+  role = "EC2SSMParameterStore"
+  }
 
 resource "terraform_data" "mongodb" {
   triggers_replace = [
@@ -31,87 +37,88 @@ resource "terraform_data" "mongodb" {
   provisioner "remote-exec" {
     inline = [ 
         "chmod +x /tmp/boostrap.sh",
-        "sudo /tmp/boostrap.sh mongodb"
+        "sudo /tmp/boostrap.sh mongodb dev"
      ]
   }
 }
 
 
-resource "aws_instance" "redis" {
-  ami           = local.ami_id
-  instance_type = var.instance_type
-  vpc_security_group_ids = [local.redis_sg_id]
-  subnet_id = local.database_subnet_ids
-  tags = merge(
-    local.common_tags,
-    {
-        Name = "${local.common_name}-redis"
-    }
-  )
-}
 
-resource "terraform_data" "redis" {
-  triggers_replace = [
-    aws_instance.redis.id
-  ]
+# resource "aws_instance" "redis" {
+#   ami           = local.ami_id
+#   instance_type = var.instance_type
+#   vpc_security_group_ids = [local.redis_sg_id]
+#   subnet_id = local.database_subnet_ids
+#   tags = merge(
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name}-redis"
+#     }
+#   )
+# }
 
-  connection {
-    type = "ssh"
-    user = "ec2-user"
-    password = local.shh_loginpass
-    host = aws_instance.redis.private_ip
-  }
+# resource "terraform_data" "redis" {
+#   triggers_replace = [
+#     aws_instance.redis.id
+#   ]
 
-  provisioner "file" {
-    source = "boostrap.sh"
-    destination = "/tmp/boostrap.sh"
-  }
+#   connection {
+#     type = "ssh"
+#     user = "ec2-user"
+#     password = local.shh_loginpass
+#     host = aws_instance.redis.private_ip
+#   }
 
-  provisioner "remote-exec" {
-    inline = [ 
-        "chmod +x /tmp/boostrap.sh",
-        "sudo /tmp/boostrap.sh redis"
-     ]
-  }
-}
+#   provisioner "file" {
+#     source = "boostrap.sh"
+#     destination = "/tmp/boostrap.sh"
+#   }
 
-resource "aws_instance" "rabbitmq" {
-  ami           = local.ami_id
-  instance_type = var.instance_type
-  vpc_security_group_ids = [local.rabbitmq_sg_id]
-  subnet_id = local.database_subnet_ids
-  tags = merge(
-    local.common_tags,
-    {
-        Name = "${local.common_name}-rabbitmq"
-    }
-  )
-}
+#   provisioner "remote-exec" {
+#     inline = [ 
+#         "chmod +x /tmp/boostrap.sh",
+#         "sudo /tmp/boostrap.sh redis dev"
+#      ]
+#   }
+# }
 
-resource "terraform_data" "rabbitmq" {
-  triggers_replace = [
-    aws_instance.rabbitmq.id
-  ]
+# resource "aws_instance" "rabbitmq" {
+#   ami           = local.ami_id
+#   instance_type = var.instance_type
+#   vpc_security_group_ids = [local.rabbitmq_sg_id]
+#   subnet_id = local.database_subnet_ids
+#   tags = merge(
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name}-rabbitmq"
+#     }
+#   )
+# }
 
-  connection {
-    type = "ssh"
-    user = "ec2-user"
-    password = local.shh_loginpass
-    host = aws_instance.rabbitmq.private_ip
-  }
+# resource "terraform_data" "rabbitmq" {
+#   triggers_replace = [
+#     aws_instance.rabbitmq.id
+#   ]
 
-  provisioner "file" {
-    source = "boostrap.sh"
-    destination = "/tmp/boostrap.sh"
-  }
+#   connection {
+#     type = "ssh"
+#     user = "ec2-user"
+#     password = local.shh_loginpass
+#     host = aws_instance.rabbitmq.private_ip
+#   }
 
-  provisioner "remote-exec" {
-    inline = [ 
-        "chmod +x /tmp/boostrap.sh",
-        "sudo /tmp/boostrap.sh rabbitmq"
-     ]
-  }
-}
+#   provisioner "file" {
+#     source = "boostrap.sh"
+#     destination = "/tmp/boostrap.sh"
+#   }
+
+#   provisioner "remote-exec" {
+#     inline = [ 
+#         "chmod +x /tmp/boostrap.sh",
+#         "sudo /tmp/boostrap.sh rabbitmq dev"
+#      ]
+#   }
+# }
 
 # resource "aws_instance" "mysql" {
 #   ami           = local.ami_id
@@ -146,7 +153,7 @@ resource "terraform_data" "rabbitmq" {
 #   provisioner "remote-exec" {
 #     inline = [ 
 #         "chmod +x /tmp/boostrap.sh",
-#         "sudo /tmp/boostrap.sh mysql"
+#         "sudo /tmp/boostrap.sh mysql dev"
 #      ]
 #   }
 # }
