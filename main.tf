@@ -49,6 +49,8 @@ resource "aws_instance" "redis" {
   instance_type = var.instance_type
   vpc_security_group_ids = [local.redis_sg_id]
   subnet_id = local.database_subnet_ids
+  iam_instance_profile = aws_iam_instance_profile.Redis-SSM-Role
+
   tags = merge(
     local.common_tags,
     {
@@ -90,6 +92,8 @@ resource "aws_instance" "rabbitmq" {
   instance_type = var.instance_type
   vpc_security_group_ids = [local.rabbitmq_sg_id]
   subnet_id = local.database_subnet_ids
+  iam_instance_profile = aws_iam_instance_profile.RabbitMQ-SSM-Role.name
+
   tags = merge(
     local.common_tags,
     {
@@ -131,6 +135,8 @@ resource "aws_instance" "mysql" {
   instance_type = var.instance_type
   vpc_security_group_ids = [local.mysql_sg_id]
   subnet_id = local.database_subnet_ids
+  iam_instance_profile = aws_iam_instance_profile.MySQL-SSM-Role.name
+
   tags = merge(
     local.common_tags,
     {
