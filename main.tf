@@ -49,7 +49,7 @@ resource "aws_instance" "redis" {
   instance_type = var.instance_type
   vpc_security_group_ids = [local.redis_sg_id]
   subnet_id = local.database_subnet_ids
-  iam_instance_profile = aws_iam_instance_profile.Redis-SSM-Role
+  iam_instance_profile = aws_iam_instance_profile.Redis-SSM-Role.name
 
   tags = merge(
     local.common_tags,
