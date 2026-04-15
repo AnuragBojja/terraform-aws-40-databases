@@ -1,6 +1,7 @@
 #!/bin/bash
 
 service_name=$1
+env=$2
 dnf install ansible -y
 
 
@@ -22,4 +23,4 @@ else
     cd $ANSIBLE_DIR
 fi 
 
-ansible-playbook -e service_name=$service_name main.yaml
+ansible-playbook -e service_name=$service_name -e env=$env main.yaml
