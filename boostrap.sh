@@ -14,11 +14,12 @@ ANSIBLE_DIR=terraform-anisble-roboshop
 LOG_DIR=/var/log/roboshoplogs
 LOGFILE_NAME=${service_name}-boostrap.log
 LOG_FILE=$LOG_DIR/$LOGFILE_NAME
-touch $LOG_FILE
+
 
 mkdir -p "$REPO_DIR"
-mkdir -p /var/log/roboshoplogs
-touch $LOG_DIR/ansible.log
+mkdir -p "$LOG_DIR"
+touch "$LOG_FILE"
+touch "$LOG_DIR/ansible.log"
 
 #installing Python 
 dnf install python3 git -y
