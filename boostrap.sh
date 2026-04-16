@@ -11,31 +11,35 @@ REPO_URL=https://github.com/AnuragBojja/terraform-anisble-roboshop.git
 REPO_DIR=/opt/terraform/ansible
 VENV_DIR=$REPO_DIR/ansible-venv
 ANSIBLE_DIR=terraform-anisble-roboshop
+LOG_DIR=/var/log/roboshoplogs
+LOGFILE_NAME=${service_name}-boostrap.log
+LOG_FILE=$LOG_DIR/$LOGFILE_NAME
+touch $LOG_FILE
 
 mkdir -p "$REPO_DIR"
 mkdir -p /var/log/roboshoplogs
-touch /var/log/roboshoplogs/ansible.log
+touch $LOG_DIR/ansible.log
 
 #installing Python 
 dnf install python3 git -y
 
 # checking for venv dir 
 if [ ! -d "$VENV_DIR" ]; then
-    python3 -m venv "$VENV_DIR"
+    python3 -m venv "$VENV_DIR" &>> $LOG_FILE
 fi
 
 # installing ansible boto3 and botocore
 source $VENV_DIR/bin/activate
-pip install ansible boto3 botocore
+pip install ansible boto3 botocore &>> $LOG_FILE
 
 cd $REPO_DIR
 
 #checking for git repo if not exiest clone if exiest pull
 if [ -d "$ANSIBLE_DIR" ]; then 
     cd "$ANSIBLE_DIR"
-    git pull
+    git pull &>> $LOG_FILE
 else
-    git clone "$REPO_URL"
+    git clone "$REPO_URL" &>> $LOG_FILE
     cd "$ANSIBLE_DIR"
 fi 
 
