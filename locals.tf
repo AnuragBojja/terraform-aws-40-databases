@@ -21,6 +21,7 @@ locals {
   user_sg_id = data.aws_ssm_parameter.user_sg_id.value
   shipping_sg_id = data.aws_ssm_parameter.shipping_sg_id.value
   payment_sg_id = data.aws_ssm_parameter.payment_sg_id.value
+  zone_id = data.aws_route53_zone.zone.zone_id
   
 
 }
