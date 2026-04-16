@@ -16,17 +16,21 @@ mkdir -p "$REPO_DIR"
 mkdir -p /var/log/roboshoplogs
 touch /var/log/roboshoplogs/ansible.log
 
+#installing Python 
 dnf install python3 git -y
 
+# checking for venv dir 
 if [ ! -d "$VENV_DIR" ]; then
     python3 -m venv "$VENV_DIR"
 fi
 
+# installing ansible boto3 and botocore
 source $VENV_DIR/bin/activate
 pip install ansible boto3 botocore
 
 cd $REPO_DIR
 
+#checking for git repo if not exiest clone if exiest pull
 if [ -d "$ANSIBLE_DIR" ]; then 
     cd "$ANSIBLE_DIR"
     git pull
