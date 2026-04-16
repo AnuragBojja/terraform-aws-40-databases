@@ -130,45 +130,45 @@ resource "terraform_data" "rabbitmq" {
   }
 }
 
-resource "aws_instance" "mysql" {
-  ami           = local.ami_id
-  instance_type = var.instance_type
-  vpc_security_group_ids = [local.mysql_sg_id]
-  subnet_id = local.database_subnet_ids
-  iam_instance_profile = aws_iam_instance_profile.MySQL-SSM-Role.name
+# resource "aws_instance" "mysql" {
+#   ami           = local.ami_id
+#   instance_type = var.instance_type
+#   vpc_security_group_ids = [local.mysql_sg_id]
+#   subnet_id = local.database_subnet_ids
+#   iam_instance_profile = aws_iam_instance_profile.MySQL-SSM-Role.name
 
-  tags = merge(
-    local.common_tags,
-    {
-        Name = "${local.common_name}-mysql"
-    }
-  )
-}
-resource "aws_iam_instance_profile" "MySQL-SSM-Role" {
-  name = "MySQL-SSM-Role"
-  role = "EC2SSMParameterStore"
-  }
-resource "terraform_data" "mysql" {
-  triggers_replace = [
-    aws_instance.mysql.id
-  ]
+#   tags = merge(
+#     local.common_tags,
+#     {
+#         Name = "${local.common_name}-mysql"
+#     }
+#   )
+# }
+# resource "aws_iam_instance_profile" "MySQL-SSM-Role" {
+#   name = "MySQL-SSM-Role"
+#   role = "EC2SSMParameterStore"
+#   }
+# resource "terraform_data" "mysql" {
+#   triggers_replace = [
+#     aws_instance.mysql.id
+#   ]
 
-  connection {
-    type = "ssh"
-    user = "ec2-user"
-    password = local.shh_loginpass
-    host = aws_instance.mysql.private_ip
-  }
+#   connection {
+#     type = "ssh"
+#     user = "ec2-user"
+#     password = local.shh_loginpass
+#     host = aws_instance.mysql.private_ip
+#   }
 
-  provisioner "file" {
-    source = "boostrap.sh"
-    destination = "/tmp/boostrap.sh"
-  }
+#   provisioner "file" {
+#     source = "boostrap.sh"
+#     destination = "/tmp/boostrap.sh"
+#   }
 
-  provisioner "remote-exec" {
-    inline = [ 
-        "chmod +x /tmp/boostrap.sh",
-        "sudo /tmp/boostrap.sh mysql dev"
-     ]
-  }
-}
+#   provisioner "remote-exec" {
+#     inline = [ 
+#         "chmod +x /tmp/boostrap.sh",
+#         "sudo /tmp/boostrap.sh mysql dev"
+#      ]
+#   }
+# }
