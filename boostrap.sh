@@ -22,7 +22,7 @@ touch "$LOG_FILE"
 touch "$LOG_DIR/ansible.log"
 
 #installing Python 
-dnf install python3 git -y
+dnf install python3 git -y &>> $LOG_FILE
 
 # checking for venv dir 
 if [ ! -d "$VENV_DIR" ]; then
