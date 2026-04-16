@@ -19,7 +19,7 @@ data "aws_ami" "roboshop_ami" {
 }
 
 data "aws_ssm_parameter" "shh_loginpass" {
-  name = "/${var.project_name}/${var.env}/shh/loginpass"
+  name = "/roboshop/${var.env}/shh/loginpass"
 }
 
 data "aws_ssm_parameter" "vpc_id" {
