@@ -13,7 +13,7 @@ REPO_DIR=/opt/terraform/ansible
 VENV_DIR=$REPO_DIR/ansible-venv
 ANSIBLE_DIR=terraform-anisble-roboshop
 LOG_DIR=/var/log/roboshoplogs
-LOGFILE_NAME=${service_name}-boostrap.log
+LOGFILE_NAME=${service_name}-bootstrap.log
 LOG_FILE=$LOG_DIR/$LOGFILE_NAME
 
 
