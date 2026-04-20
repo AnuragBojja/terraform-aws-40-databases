@@ -30,14 +30,14 @@ resource "terraform_data" "mongodb" {
   }
 
   provisioner "file" {
-    source = "boostrap.sh"
-    destination = "/tmp/boostrap.sh"
+    source = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
   }
 
   provisioner "remote-exec" {
     inline = [ 
-        "chmod +x /tmp/boostrap.sh",
-        "sudo /tmp/boostrap.sh mongodb dev"
+        "chmod +x /tmp/bootstrap.sh",
+        "sudo /tmp/bootstrap.sh mongodb dev"
      ]
   }
 }
@@ -75,14 +75,14 @@ resource "terraform_data" "mongodb" {
 #   }
 
 #   provisioner "file" {
-#     source = "boostrap.sh"
-#     destination = "/tmp/boostrap.sh"
+#     source = "bootstrap.sh"
+#     destination = "/tmp/bootstrap.sh"
 #   }
 
 #   provisioner "remote-exec" {
 #     inline = [ 
-#         "chmod +x /tmp/boostrap.sh",
-#         "sudo /tmp/boostrap.sh redis dev"
+#         "chmod +x /tmp/bootstrap.sh",
+#         "sudo /tmp/bootstrap.sh redis dev"
 #      ]
 #   }
 # }
@@ -118,14 +118,14 @@ resource "terraform_data" "mongodb" {
 #   }
 
 #   provisioner "file" {
-#     source = "boostrap.sh"
-#     destination = "/tmp/boostrap.sh"
+#     source = "bootstrap.sh"
+#     destination = "/tmp/bootstrap.sh"
 #   }
 
 #   provisioner "remote-exec" {
 #     inline = [ 
-#         "chmod +x /tmp/boostrap.sh",
-#         "sudo /tmp/boostrap.sh rabbitmq dev"
+#         "chmod +x /tmp/bootstrap.sh",
+#         "sudo /tmp/bootstrap.sh rabbitmq dev"
 #      ]
 #   }
 # }
@@ -161,14 +161,14 @@ resource "terraform_data" "mongodb" {
 #   }
 
 #   provisioner "file" {
-#     source = "boostrap.sh"
-#     destination = "/tmp/boostrap.sh"
+#     source = "bootstrap.sh"
+#     destination = "/tmp/bootstrap.sh"
 #   }
 
 #   provisioner "remote-exec" {
 #     inline = [ 
-#         "chmod +x /tmp/boostrap.sh",
-#         "sudo /tmp/boostrap.sh mysql dev"
+#         "chmod +x /tmp/bootstrap.sh",
+#         "sudo /tmp/bootstrap.sh mysql dev"
 #      ]
 #   }
 # }
