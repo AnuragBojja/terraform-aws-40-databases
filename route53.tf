@@ -14,18 +14,18 @@ resource "aws_route53_record" "redis" {
   records = [aws_instance.redis.private_ip]
 }
 
-# resource "aws_route53_record" "rabbitmq" {
-#   zone_id = local.zone_id
-#   name    = "rabbitmq-${var.env}.${var.domain_name}"
-#   type    = "A"
-#   ttl     = "1"
-#   records = [aws_instance.rabbitmq.private_ip]
-# }
+resource "aws_route53_record" "rabbitmq" {
+  zone_id = local.zone_id
+  name    = "rabbitmq-${var.env}.${var.domain_name}"
+  type    = "A"
+  ttl     = "1"
+  records = [aws_instance.rabbitmq.private_ip]
+}
 
-# resource "aws_route53_record" "mysql" {
-#   zone_id = local.zone_id
-#   name    = "mysql-${var.env}.${var.domain_name}"
-#   type    = "A"
-#   ttl     = "1"
-#   records = [aws_instance.mysql.private_ip]
-# }
+resource "aws_route53_record" "mysql" {
+  zone_id = local.zone_id
+  name    = "mysql-${var.env}.${var.domain_name}"
+  type    = "A"
+  ttl     = "1"
+  records = [aws_instance.mysql.private_ip]
+}
