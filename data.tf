@@ -38,7 +38,7 @@ data "aws_ssm_parameter" "mysql_sg_id" {
   name = "/${var.project_name}/${var.env}/mysql_sg_id"
 }
 
-#### BACKEND ########################
+#### BACKEND #########
 data "aws_ssm_parameter" "cart_sg_id" {
   name = "/${var.project_name}/${var.env}/cart_sg_id"
 }
